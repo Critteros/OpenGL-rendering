@@ -47,6 +47,7 @@ function(set_project_warnings project_name)
       -Wnull-dereference # warn if a null dereference is detected
       -Wdouble-promotion # warn if float is implicit promoted to double
       -Wformat=2 # warn on security issues around functions that format output (ie printf)
+      -Wno-language-extension-token #Fix glad being glad and throwing unecessary erros beacause FFS fix your libs
   )
 
   if(WARNINGS_AS_ERRORS)

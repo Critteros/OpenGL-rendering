@@ -1,6 +1,6 @@
 ---
-Checks:          '*,-fuchsia-*,-zircon-*,-abseil-*,-modernize-use-trailing-return-type,-llvm-*, -llvmlibc*'
-WarningsAsErrors: '*'
+Checks:          '*,-fuchsia-*,-zircon-*,-abseil-*,-modernize-use-trailing-return-type,-llvm-*, -llvmlibc*, -cppcoreguidelines-pro-type-reinterpret-cast, -misc-non-private-member-variables-in-classes, -altera-*, -cppcoreguidelines-avoid-magic-numbers, -cppcoreguidelines-macro-usage, -readability-magic-numbers, -hicpp-uppercase-literal-suffix, -readability-uppercase-literal-suffix, -cppcoreguidelines-avoid-non-const-global-variables'
+WarningsAsErrors: ''
 HeaderFilterRegex: ''
 FormatStyle:     none
 

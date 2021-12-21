@@ -1,11 +1,14 @@
 cmake_minimum_required(VERSION 3.17)
 
 project(CGr LANGUAGES CXX)
-include(cmake/StandardProjectSettings.cmake)
-include(cmake/PreventInSourceBuilds.cmake)
+
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_BUILD_TYPE "Debug")
+
+include(cmake/StandardProjectSettings.cmake)
+include(cmake/PreventInSourceBuilds.cmake)
 
 #Grouping manually enabled options
 add_library(additional_options INTERFACE)
@@ -42,19 +45,31 @@ if(ENABLE_PCH)
 endif()
 
 # Set up some extra Conan dependencies based on our needs before loading Conan
-set(CONAN_EXTRA_REQUIRES "fmt/8.0.1")
+set(CONAN_EXTRA_REQUIRES "spdlog/1.9.0 fmt/8.0.1 glfw/3.3.6")
 set(CONAN_EXTRA_OPTIONS "")
 
 file(GLOB sources "src/*.cpp")
-file(GLOB includes "include/*.h")
+
+
+add_subdirectory("./vendor")
 
 set(ENABLE_CLANG_TIDY ON)
-set(CMAKE_CXX_CLANG_TIDY clang-tidy -checks=-*,readability-*)
-add_executable(${PROJECT_NAME} ${sources} ${includes})
+add_executable(${PROJECT_NAME} ${sources})
+target_include_directories(${PROJECT_NAME} PRIVATE "include")
 
 find_package(fmt REQUIRED)
 target_link_libraries(${PROJECT_NAME} fmt::fmt)
 
+find_package(spdlog REQUIRED)
+target_link_libraries(${PROJECT_NAME} spdlog::spdlog)
+
+find_package(glfw3)
+target_link_libraries(${PROJECT_NAME} glfw)
+
+target_link_libraries(${PROJECT_NAME} glad)
+
+
 target_link_libraries(${PROJECT_NAME} additional_options)
+
 
 
