@@ -14,8 +14,7 @@ include(cmake/PreventInSourceBuilds.cmake)
 add_library(additional_options INTERFACE)
 target_compile_features(additional_options INTERFACE cxx_std_17)
 
-include(cmake/Conan.cmake)
-run_conan()
+
 
 #Compiler Warnings
 include("cmake/CompilerWarnings.cmake")
@@ -57,19 +56,35 @@ set(ENABLE_CLANG_TIDY ON)
 add_executable(${PROJECT_NAME} ${sources})
 target_include_directories(${PROJECT_NAME} PRIVATE "include")
 
-find_package(fmt REQUIRED)
-target_link_libraries(${PROJECT_NAME} fmt::fmt)
+include(FetchContent)
 
-find_package(spdlog REQUIRED)
-target_link_libraries(${PROJECT_NAME} spdlog::spdlog)
+#fmt https://github.com/fmtlib/fmt.git
+FetchContent_Declare(
+        fmt
+        GIT_REPOSITORY "https://github.com/fmtlib/fmt.git"
+        GIT_TAG "d141cdbeb0fb422a3fb7173b285fd38e0d1772dc"
+)
 
-find_package(glfw3)
-target_link_libraries(${PROJECT_NAME} glfw)
+#spdlog https://github.com/gabime/spdlog.git
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY "https://github.com/gabime/spdlog.git"
+        GIT_TAG "eb3220622e73a4889eee355ffa37972b3cac3df5"
+)
 
-target_link_libraries(${PROJECT_NAME} glad)
+#glfw https://github.com/glfw/glfw.git
+FetchContent_Declare(
+        glfw
+        GIT_REPOSITORY "https://github.com/glfw/glfw.git"
+        GIT_TAG "7d5a16ce714f0b5f4efa3262de22e4d948851525"
+)
 
+FetchContent_MakeAvailable(fmt spdlog glfw)
+
+target_link_libraries(${PROJECT_NAME} fmt spdlog glfw)
 
 target_link_libraries(${PROJECT_NAME} additional_options)
+target_link_libraries(${PROJECT_NAME} glad)
 
 
 
