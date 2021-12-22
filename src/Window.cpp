@@ -30,6 +30,7 @@ Window::Window(int windowWidth, int windowHeight, std::string windowName, OpenGL
     }
 
     glfwMakeContextCurrent(_windowPtr);
+    glfwSwapInterval(0);
 }
 
 void Window::loadOpenGLfunctions(int width, int height) const
