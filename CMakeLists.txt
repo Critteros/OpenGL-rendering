@@ -18,6 +18,7 @@ include(cmake/StaticAnalyzers.cmake)
 add_library(additional_options INTERFACE)
 target_compile_features(additional_options INTERFACE cxx_std_17)
 
+
 # Setting up external deps
 add_subdirectory("./external")
 
